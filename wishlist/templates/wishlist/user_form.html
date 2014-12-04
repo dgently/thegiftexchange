@@ -1,0 +1,31 @@
+{% extends 'wishlist/base.html' %}
+
+{% load staticfiles %}
+
+{%block title %}Family List{%endblock%}
+
+{%block nav%}
+		 
+	{% if user.is_authenticated %}
+		
+		{%endif%}
+       
+{%endblock%}
+
+
+
+
+
+
+{%block body%}
+
+<div class="container">
+	<h2>Welcome to the site!</h2>
+	<h4 class="text-danger">First things first, lets set a better password for your account.</h4>
+<form class="form" action="" method="post">
+	{% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-primary"type="submit" value="Update" />
+</form>
+</div>
+{%endblock%}

@@ -1,0 +1,54 @@
+{% extends 'wishlist/base.html' %}
+
+{% load staticfiles %}
+
+{%block title %}Family List{%endblock%}
+
+{%block nav%}
+		 <li class='active'><a href="/">Family Lists</a></li>
+	{% if user.is_authenticated %}
+		<li><a href="/user/{{user.username}}">My List</a></li>
+		{%endif%}
+
+{%endblock%}
+
+
+
+
+
+
+{%block body%}
+
+
+<div class='container'>
+    <div class="alert alert-info" role="alert"><span>We got a new domain name! theGiftExchange is now @ <a href="http://www.thegift.exchange">www.thegift.exchange</a>. So much easier to remember!</span></div>
+	<div class="jumbotron">
+	  <h2>Welcome To the Gift Exchange <span class="small">(alpha)</span></h2>
+	  <span>Select a <span class="label label-primary">person</span> to see their wish list.</span><br>
+	  <span> Mark a gift idea as </span><span class="label label-danger">gifted</span><span> to claim it.</span><br>
+	  <span> Go to your page and </span><span class="label label-info">add gifts</span><span> to your wishlist.</span><br>
+	  <span> Limit this year is </span><span class='label label-success'>50$</span>
+
+	</div>
+
+
+	{% for username in user_list %}
+
+
+		<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+		<a href="/user/{{username.username}}"><span class="glyphicon glyphicon-user"></span>  {{username.first_name}} {{username.last_name}}</a>
+			</div>
+
+
+
+
+	{% endfor %}
+
+
+
+</div>
+
+
+
+
+{% endblock %}

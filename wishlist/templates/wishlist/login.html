@@ -1,0 +1,47 @@
+{% extends 'wishlist/base.html' %}
+
+{% load staticfiles %}
+
+{%block title %}Login{%endblock%}
+
+{%block nav%}
+        <li><a href="/">Family Lists</a></li>
+{%endblock%}
+      
+        
+
+
+{% block body %}
+  	<div class="container">
+  		{%if error %}
+      <div class="alert alert-danger" role="alert"><b>Whoops!</b> Something is wrong with your <b>username</b> or <b>password.</b>  Try again. Remember your username should be your <b>first name</b> and <b>last initial</b> (eg. <b>andyw</b>)</div>
+      {% endif %}
+    
+
+      <div class="row">
+    <div class="col-sm-4"></div>
+  	<div class="col-sm-4">
+      
+      <form class="form-signin" id="login_form" method='post' role="form">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="text" id="inputEmail" name="username" class="form-control" placeholder="User Name" required autofocus>
+        <br>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Sign in</button>
+      </form>
+  </div>
+  <div class="col-sm-4"></div>
+  </div>
+    </div> <!-- /container -->
+{%endblock%}
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

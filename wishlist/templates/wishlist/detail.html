@@ -1,0 +1,111 @@
+{% extends 'wishlist/base.html' %}
+
+{% load staticfiles %}
+
+{%block title %}{% ifequal user.username username.username %}My List{%else%}{{username.first_name}}'s List{%endifequal%}{%endblock%}
+
+{%block nav%}
+		<li><a href="/">Family Lists</a></li>
+	{% if user.is_authenticated %}
+
+		<li {% ifequal user.username username.username %}class="active"{%endifequal%}><a href="/user/{{user.username}}">My List</a></li>
+		{%endif%}
+
+        {%if user.username != username.username %}
+        <li class="active"><a>{{username.first_name}}'s List</a></li>
+        {%endif%}
+
+{%endblock%}
+
+
+
+
+
+
+{%block body%}
+
+
+<div class="container">
+	<div class="row">
+	<div class="col-sm-6">
+
+	{% if gifts %}
+	{% ifequal user.username username.username %}
+	<h3>I am asking santa for...</h3>
+	{%else%}
+	<h3>{{username.first_name}} is asking santa for...</h3>
+	{%endifequal%}
+
+		<div class='list-group'>
+		{% for gift in gifts%}
+
+			<a
+				href="/user/{{username.username}}/{{gift.slug}}"
+				class= "list-group-item
+				{%if username.username != user.username and gift.gifted and user.is_authenticated%}
+				list-group-item-danger
+				{%else%}
+				list-group-item-success
+				{%endif%}
+				"
+
+
+				>{{gift.short_name}}{%if username.username != user.username and gift.gifted and user.is_authenticated%}         <span class="label label-danger">gifted</span>{%endif%}</a>
+
+		{% endfor %}
+		{% ifequal user.username username.username %}
+		<a class="list-group-item" href="/user/{{username.username}}/add_gift"><span class='glyphicon glyphicon-plus'></span> Add Gift</a>
+
+
+		{%endifequal%}
+		</div>
+	{% else %}
+		{% ifequal user.username username.username %}
+
+		<br><br>
+		<h4 class="text-success">This is your gift list. Add some gift ideas to get started. <small>And don't forget to update your shipping information!</small></h4>
+		<a class="list-group-item" href="/user/{{username.username}}/add_gift"><span class='glyphicon glyphicon-plus'></span> Add Gift</a>
+		{%else%}
+		<h4 class="text-success"><strong>{{username.first_name}}</strong> hasn't added any gift ideas yet.</h4>
+
+		{%endifequal%}
+	{% endif %}
+
+
+
+
+
+		</div>
+		<br><br><br>
+		{%if user_info.address_street != " " %}
+		<div class="col-sm-6">
+		<div class= "panel panel-info">
+		<div class="panel-heading">
+		{% ifequal user.username username.username %}
+		<h5>My shipping address for Christmas is:</h5>
+		{%else%}
+		<h5>And will be here for Christmas:</h5>
+		{%endifequal%}
+		</div>
+		<div class=panel-body>
+
+		<address>
+			{{user_info.address_street}}<br>
+			{{user_info.address_city}},{{user_info.address_state}} {{user_info.address_zip}}<br>
+		</address>
+		{%else%}
+		<br><br>
+		{%endif%}
+		{% ifequal user.username username.username %}
+		<a class = "btn btn-info" href="/user/{{username.username}}/update">Update Address</a>
+		{%endifequal%}
+
+	</div>
+
+	</div>
+	</div
+</div>
+</div>
+
+
+{%endblock%}

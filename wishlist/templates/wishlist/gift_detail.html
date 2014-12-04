@@ -1,0 +1,112 @@
+{% extends 'wishlist/base.html' %}
+
+{% load staticfiles %}
+
+{%block title %}{% ifequal user.username username.username %}My Gift{%else%}{{username.first_name}}'s Gift{%endifequal%}{%endblock%}
+
+{%block nav%}
+	{% if user.is_authenticated %}
+		 <li><a href="/">Family Lists</a></li>
+		<li {% ifequal user.username username.username %}class="active"{%endifequal%}><a href="/user/{{user.username}}">My List</a></li>
+		{%endif%}
+
+        {%if user.username != username.username %}
+        <li><a href="./{{username.username}}">{{username.first_name}}'s List</a></li>
+        {%endif%}
+
+{%endblock%}
+
+
+
+
+
+
+{%block body%}
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-xs-8 col-xs-offset-2">
+            <a href="./"><span class="glyphicon glyphicon-arrow-left"></span> back</a>
+
+
+
+            <div class= "panel panel-info">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+
+                        <H3 class='text-info'>{{username.first_name}} is asking santa for...</H3>
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+
+            </div>
+
+
+                <div class=panel-body>
+                    <h3>{{gift.short_name}}</h3>
+                    <h4 class='text-danger'>{{gift.description}}</h4>
+                    {%if gift.link != '' %}
+                        <a href="{{gift.link}}" class="btn-sm btn-info">Link</a>
+                    {%endif%}
+                </div>
+
+
+            </div>
+
+            {%if user.is_authenticated and user.username == username.username %}
+
+            <div class="row">
+                <div class="col-xs-1">
+
+                    <a href="/user/{{username.username}}/{{gift.slug}}/edit" class="btn btn-success">Edit</a>
+                </div>
+                <div class="col-xs-1 pull-right col-xs-pull-1">
+                    <form method="POST">
+	                    {%csrf_token%}
+                        <input class="btn btn-danger" name='delete' type="submit" value="Delete"></input>
+                    </form>
+
+                </div>
+            </div>
+
+            {%endif%}
+
+
+            {%if user.is_authenticated and user.username != username.username %}
+
+            <div class="row">
+                <div class="col-xs-1">
+
+                    {% if user.is_authenticated and user.username != username.username and gift.gifted == False %}
+
+                        <form method="POST">
+	                        {% csrf_token %}
+                            <input class="btn btn-sm btn-success" name='gifted' type="submit" value="Claim This Gift"></input>
+                        </form>
+                    {%else%}
+
+                        <a href="#" class="btn btn-sm btn-danger">gifted</a>
+                    {%endif%}
+                </div>
+            </div>
+            {%endif%}
+        </div>
+</div>
+
+
+
+
+</div>
+
+
+
+{%endblock%}

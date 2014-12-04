@@ -1,0 +1,28 @@
+{% extends 'wishlist/base.html' %}
+
+{% load staticfiles %}
+
+{%block title %}Family List{%endblock%}
+
+{%block nav%}
+		 <li class='active'><a href="/">Family Lists</a></li>
+	{% if user.is_authenticated %}
+		<li><a href="/user/{{user.username}}">My List</a></li>
+		{%endif%}
+       
+{%endblock%}
+
+
+
+
+
+
+{%block body%}
+
+<div class="container">
+<form class="form" action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-primary"type="submit" value="Update" />
+</form>
+</div>
+{%endblock%}
